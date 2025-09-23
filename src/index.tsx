@@ -1,15 +1,16 @@
-import {render, useSideEffect, useState} from './utils/render';
-import {createElement} from './utils/dom';
+import { render, useSideEffect, useState } from './utils/render';
+import { createElement } from './utils/dom';
 
 const Akaza = {
-  render, createElement,
+  render,
+  createElement,
 };
 
 const View = () => {
   const [count, setCount] = useState(0);
 
   useSideEffect(() => {
-    console.log('My first ever effect, let\'s hope this works 🤞🏾');
+    console.log("My first ever effect, let's hope this works 🤞🏾");
 
     return () => {
       console.log('unmounting');
@@ -17,7 +18,7 @@ const View = () => {
   }, []);
 
   useSideEffect(() => {
-    console.log('My second effect, let\'s hope this works 🤞🏾');
+    console.log("My second effect, let's hope this works 🤞🏾");
 
     return () => {
       console.log('unmounting 2');
@@ -28,10 +29,12 @@ const View = () => {
     <div id={'app'}>
       <p>Hello</p>
       <span>{count}</span>
-      <button onClick={() => {
-        console.log('button clicked');
-        setCount((x: number) => x + 1);
-      }}>
+      <button
+        onClick={() => {
+          console.log('button clicked');
+          setCount((x: number) => x + 1);
+        }}
+      >
         +
       </button>
     </div>
@@ -40,4 +43,4 @@ const View = () => {
 
 const root = document.getElementById('root')!;
 
-render(<View/>, root);
+render(<View />, root);

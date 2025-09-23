@@ -1,5 +1,5 @@
-import type {Fiber} from '../../types';
-import {updateDom} from './index.ts';
+import type { Fiber } from '../../types';
+import { updateDom } from './index.ts';
 
 export default function createDom(fiber: Fiber) {
   console.log('CREATING DOM');
