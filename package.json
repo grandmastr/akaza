@@ -1,0 +1,30 @@
+{
+  "name": "akaza",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "babel-node --extensions .ts,.tsx src/index.tsx",
+    "build": "babel src --out-dir public --extensions .ts,.tsx",
+    "serve": "npx http-server public -o",
+    "run": "npm run build && node public/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.4",
+    "@babel/node": "^7.28.0",
+    "@babel/plugin-transform-react-jsx": "^7.27.1",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-typescript": "^7.27.1",
+    "@types/node": "^24.4.0",
+    "babel-loader": "^10.0.0",
+    "babel-plugin-add-import-extension": "^1.6.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

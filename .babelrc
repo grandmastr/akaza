@@ -1,0 +1,30 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": "defaults"
+        },
+        "modules": false
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "pragma": "Akaza.createElement",
+        "pragmaFrag": "Fragment"
+      }
+    ],
+    [
+      "add-import-extension",
+      {
+        "extension": "js"
+      }
+    ]
+  ],
+  "sourceType": "module"
+}
