@@ -1,4 +1,4 @@
-import type { Fiber } from '../../types.ts';
+import type { Fiber, VNode } from '../../types.ts';
 
 export default function createElement(
   type: string,
@@ -22,11 +22,11 @@ export default function createElement(
   };
 }
 
-function createTextElement(nodeValue: any) {
+function createTextElement(nodeValue: unknown): VNode {
   return {
     type: 'TEXT_ELEMENT',
     props: {
-      nodeValue,
+      nodeValue: String(nodeValue),
       children: [],
     },
   };

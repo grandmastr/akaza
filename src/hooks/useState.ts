@@ -1,9 +1,11 @@
-import runtime from '../runtime.ts';
-import type { Fiber, StateHook } from '../types.ts';
-import ric from '../utils/requestIdleCallback-polyfill.ts';
-import { workLoop } from '../utils/render.ts';
+import runtime from '../runtime';
+import type { Fiber, StateHook } from '../types';
+import ric from '../utils/requestIdleCallback-polyfill';
+import { workLoop } from '../utils/render';
 
-export function useState<T>(initial: T): [T, (a: T | ((t: T) => T)) => void] {
+export default function useState<T>(
+  initial: T,
+): [T, (a: T | ((t: T) => T)) => void] {
   // this checks for the hook that's in this exact position for the previous render... this is because order matters
   const oldHook = runtime.wipFiber?.alternate?.hooks?.[runtime.hookIndex] as
     | StateHook<T>

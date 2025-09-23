@@ -10,8 +10,7 @@
     "jsx": "preserve",
     "noEmit": true,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "allowImportingTsExtensions": true
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": ["src", "scripts", "*.ts"]
 }

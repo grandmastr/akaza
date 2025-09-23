@@ -1,6 +1,6 @@
 import type { Element, FC, Fiber, Hook } from '../types.ts';
-import runtime from '../runtime.ts';
-import reconcileChildren from './reconcileChildren.ts';
+import runtime from '../runtime';
+import reconcileChildren from './reconcileChildren';
 import { createDom } from './dom';
 
 export default function performBitOfWork(fiber: Fiber): Fiber | undefined {
@@ -19,10 +19,6 @@ export default function performBitOfWork(fiber: Fiber): Fiber | undefined {
 }
 
 export function updateFunctionComponent(fiber: Fiber) {
-  console.log(
-    '[updateFunctionComponent] fiber.type',
-    fiber.type.name || fiber.type,
-  );
   // prepare hook runtime
   runtime.wipFiber = fiber;
   runtime.hookIndex = 0;

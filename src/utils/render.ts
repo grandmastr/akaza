@@ -1,11 +1,10 @@
-import type { Fiber } from '../types';
+import type { Fiber, Element } from '../types';
 import ric from './requestIdleCallback-polyfill';
 import runtime from '../runtime';
 import commitRoot from './dom/commitRoot';
-import performBitOfWork from './performBitOfWork.ts';
+import performBitOfWork from './performBitOfWork';
 
-export function render(element: any, container: Node) {
-  console.log('[RENDER]: trying to render');
+export default function render(element: Element, container: Node) {
   // here we set the root of the fiber as the next bit of work to get done
   runtime.wipRoot = {
     dom: container,

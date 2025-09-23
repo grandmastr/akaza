@@ -1,7 +1,7 @@
-import type { Hook, SideEffect, SideEffectHook } from '../types.ts';
-import runtime from '../runtime.ts';
+import type { Hook, SideEffect, SideEffectHook } from '../types';
+import runtime from '../runtime';
 
-export function useSideEffect(
+export default function useSideEffect(
   create: SideEffect['create'],
   deps?: SideEffect['deps'],
 ) {

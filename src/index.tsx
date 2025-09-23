@@ -1,5 +1,4 @@
-import { render, useSideEffect, useState } from './utils/render';
-import { createElement } from './utils/dom';
+import { createElement, render, useSideEffect, useState } from './akaza';
 
 const Akaza = {
   render,
@@ -28,7 +27,7 @@ const View = () => {
   return (
     <div id={'app'}>
       <p>Hello</p>
-      <span>{count}</span>
+      <input type="text" onChange={console.log} onInput={console.log} />
       <button
         onClick={() => {
           console.log('button clicked');

@@ -1,8 +1,8 @@
 import runtime from '../../runtime';
 import { Fiber } from '../../types';
 import runSideEffects from '../runSideEffects';
-import { execCleanup } from '../index.ts';
-import { updateDom } from './index.ts';
+import { execCleanup } from '../index';
+import { updateDom } from './index';
 
 export default function commitRoot() {
   // 1. Process deletions first (so insertions see a clean parent)
@@ -25,14 +25,6 @@ export default function commitRoot() {
  */
 function commitWork(fiber?: Fiber | null) {
   if (!fiber) return;
-  console.log(
-    '[commitWork] fiber',
-    fiber.type,
-    'effect',
-    fiber.effectTag,
-    'hasDom?',
-    !!fiber.dom,
-  );
 
   // find the nearest parent with a DOM node
   let parentFiber = fiber.parent as Fiber | null;
@@ -42,7 +34,6 @@ function commitWork(fiber?: Fiber | null) {
 
   // Effect application
   if (fiber.effectTag === 'PLACEMENT' && fiber.dom) {
-    console.log('[commitWork] appending', fiber.dom, 'to', domParent);
     domParent?.appendChild(fiber.dom);
   } else if (fiber.effectTag === 'UPDATE' && fiber.dom) {
     updateDom(

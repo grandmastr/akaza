@@ -30,6 +30,24 @@ export type SideEffectHook = {
 
 export type Hook = StateHook | SideEffectHook;
 
-export type Props = Record<string, unknown>;
+export type DomProps = {
+  nodeValue?: string;
+  key?: string | number;
+} & Record<string, unknown>;
+
+export type ElementProps = {
+  children: VNode[];
+  nodeValue?: string;
+  key?: Key;
+  [prop: string]: unknown;
+};
+
+export type VNode =
+  | {
+      type: 'TEXT_ELEMENT';
+      props: { nodeValue: string; children: VNode[]; key?: string | number };
+    }
+  | { type: string | FC; props: ElementProps };
 export type FC = (props: Record<string, unknown>) => Element | Element[] | null;
-export type Element = { type: any; props?: Props };
+export type Element = { type: any; props?: ElementProps };
+export type Key = string | number;
