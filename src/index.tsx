@@ -6,7 +6,7 @@ const Akaza = {
 };
 
 const View = () => {
-  const [count, setCount] = useState(0);
+  const [message, setMessage] = useState('');
 
   useSideEffect(() => {
     console.log("My first ever effect, let's hope this works 🤞🏾");
@@ -22,20 +22,13 @@ const View = () => {
     return () => {
       console.log('unmounting 2');
     };
-  }, [count]);
+  }, [message]);
 
   return (
     <div id={'app'}>
       <p>Hello</p>
-      <input type="text" onChange={console.log} onInput={console.log} />
-      <button
-        onClick={() => {
-          console.log('button clicked');
-          setCount((x: number) => x + 1);
-        }}
-      >
-        +
-      </button>
+      <input type="text" onChange={({ target }) => setMessage(target.value)} />
+      <span>here's a quick message: {message}</span>
     </div>
   );
 };

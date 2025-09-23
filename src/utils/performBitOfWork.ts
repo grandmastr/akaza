@@ -1,4 +1,4 @@
-import type { Element, FC, Fiber, Hook } from '../types.ts';
+import type { FC, Fiber, Hook, VNode } from '../types.ts';
 import runtime from '../runtime';
 import reconcileChildren from './reconcileChildren';
 import { createDom } from './dom';
@@ -28,7 +28,7 @@ export function updateFunctionComponent(fiber: Fiber) {
   const result = (fiber.type as FC)(fiber.props || {});
   const children = (Array.isArray(result) ? result : [result]).filter(
     Boolean,
-  ) as Element[];
+  ) as VNode[];
 
   reconcileChildren(fiber, children);
 }
