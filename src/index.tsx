@@ -2,6 +2,7 @@ import {
   createContext,
   createElement,
   render,
+  useContext,
   useRef,
   useSideEffect,
   useState,
@@ -15,6 +16,7 @@ const Akaza = {
 const View = () => {
   const [message, setMessage] = useState('');
   const inputRef = useRef<HTMLInputElement>();
+  const theme = useContext(Theme);
 
   useSideEffect(() => {
     console.log("My first ever effect, let's hope this works 🤞🏾");
@@ -48,6 +50,7 @@ const View = () => {
       />
       <span>here's a quick message: {message}</span>
       <button onClick={focusInput}>focus on input</button>
+      <span>this is the current theme: {theme}</span>
     </div>
   );
 };
@@ -64,4 +67,4 @@ function App() {
 
 const root = document.getElementById('root')!;
 
-render(<View />, root);
+render(<App />, root);

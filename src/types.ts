@@ -39,6 +39,6 @@ export type VNode =
       props: { nodeValue: string; children: VNode[]; key?: string | number };
     }
   | { type: string | FC; props: ElementProps };
-export type FC = (props: Record<string, unknown>) => Element | Element[] | null;
-export type Element = { type: any; props?: ElementProps };
+export type Element = VNode | VNode[] | null;
+export type FC = (props: Record<string, unknown>) => Element;
 export type Key = string | number;

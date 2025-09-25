@@ -2,7 +2,7 @@ import type { VNode } from './types';
 
 declare global {
   namespace JSX {
-    interface Element extends VNode {}
+    type Element = VNode | VNode[] | null;
     interface ElementChildrenAttribute {
       children: {};
     }

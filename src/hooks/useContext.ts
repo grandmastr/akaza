@@ -3,14 +3,15 @@ import runtime from '../runtime';
 
 export type Context<T> = {
   id: symbol;
-  Provider: (props: { value: T; children: VNode }) => VNode | VNode[] | null;
+  Provider: (props: { value: T; children: VNode | VNode[] | null }) =>
+    VNode | VNode[] | null;
   defaultValue: T;
 };
 
 export function createContext<T>(defaultValue: T): Context<T> {
   const id = Symbol('context');
 
-  function Provider({children}: { value: T; children: VNode | VNode[] }) {
+  function Provider({ children }: { value: T; children: VNode | VNode[] | null }) {
     return children ?? null;
   }
 
