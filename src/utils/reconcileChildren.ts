@@ -61,12 +61,12 @@ export default function reconcileChildren(wipFiber: Fiber, elements: VNode[]) {
     }
 
     if (!prevSibling)
-      wipFiber.child = newFiber; // FIX: set first child on wipFiber
+      wipFiber.child = newFiber;
     else prevSibling.sibling = newFiber;
     prevSibling = newFiber;
   }
 
-  // 3. Anything left wasn’t matched → deletions (FIX: add sweep)
+  // 3. Anything left wasn’t matched
   oldFiberByKey.forEach((remaining) => {
     remaining.effectTag = 'DELETION';
     runtime.deletions.push(remaining);

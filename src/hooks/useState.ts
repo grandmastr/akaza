@@ -1,7 +1,13 @@
 import runtime from '../runtime';
-import type { Fiber, StateHook } from '../types';
+import type { Fiber } from '../types';
 import ric from '../utils/requestIdleCallback-polyfill';
 import { workLoop } from '../utils/render';
+
+export type StateHook<T = unknown> = {
+  kind: 'state';
+  state: T;
+  queue: Array<T | ((prev: T) => T)>;
+};
 
 export default function useState<T>(
   initial: T,

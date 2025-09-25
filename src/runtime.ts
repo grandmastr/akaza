@@ -11,12 +11,15 @@ interface Runtime {
 }
 
 const runtime: Runtime = {
-  wipFiber: null,
+  // The root fiber node, this lasts the entire app
   wipRoot: null,
   currentRoot: null,
-  hookIndex: 0,
-  nextBitOfWork: undefined,
   deletions: [],
+  nextBitOfWork: undefined,
+
+  // The fiber node currently being worked on, this lasts per component
+  wipFiber: null,
+  hookIndex: 0,
 };
 
 export default runtime;

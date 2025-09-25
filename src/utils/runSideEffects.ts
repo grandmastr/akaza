@@ -1,5 +1,5 @@
-import type { Fiber } from '../types.ts';
-import { execCleanup } from './index.ts';
+import type { Fiber } from '../types';
+import { execCleanup } from './index';
 
 export default function runSideEffects(root: Fiber) {
   // Depth-first walk for each fiber with hooks. runup/cleanup as needed

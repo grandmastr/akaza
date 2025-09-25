@@ -1,3 +1,7 @@
+import { RefHook, RefObject } from './hooks/useRef';
+import { StateHook } from './hooks/useState';
+import { SideEffectHook } from './hooks/useSideEffect';
+
 export interface Fiber {
   dom: Node | HTMLElement | null;
   type?: 'TEXT_ELEMENT' | any;
@@ -15,20 +19,7 @@ export type SideEffect = {
   deps?: unknown[];
 };
 
-export type StateHook<T = unknown> = {
-  kind: 'state';
-  state: T;
-  queue: Array<T | ((prev: T) => T)>;
-};
-
-export type SideEffectHook = {
-  kind: 'sideEffect';
-  sideEffect: SideEffect;
-  cleanup?: () => void;
-  prevDeps?: unknown[];
-};
-
-export type Hook = StateHook | SideEffectHook;
+export type Hook = StateHook | SideEffectHook | RefHook;
 
 export type DomProps = {
   nodeValue?: string;
@@ -36,11 +27,11 @@ export type DomProps = {
 } & Record<string, unknown>;
 
 export type ElementProps = {
-  children: VNode[];
+  children: VNode | VNode[];
   nodeValue?: string;
   key?: Key;
-  [prop: string]: unknown;
-};
+  ref?: RefObject<any> | ((node: any) => void);
+} & Record<string, unknown>;
 
 export type VNode =
   | {

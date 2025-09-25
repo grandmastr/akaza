@@ -1,9 +1,7 @@
 import isEvent from './isEvent';
 
-const isProp = (prop: string) =>
-  prop !== 'children' &&
-  prop !== 'nodeValue' &&
-  prop !== 'key' &&
-  !isEvent(prop);
+const specialProps = ['children', 'nodeValue', 'key', 'ref'];
+
+const isProp = (prop: string) => !specialProps.includes(prop) && !isEvent(prop);
 
 export default isProp;

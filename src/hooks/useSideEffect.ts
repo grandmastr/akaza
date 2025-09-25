@@ -1,5 +1,12 @@
-import type { Hook, SideEffect, SideEffectHook } from '../types';
+import type { Hook, SideEffect } from '../types';
 import runtime from '../runtime';
+
+export type SideEffectHook = {
+  kind: 'sideEffect';
+  sideEffect: SideEffect;
+  cleanup?: () => void;
+  prevDeps?: unknown[];
+};
 
 export default function useSideEffect(
   create: SideEffect['create'],

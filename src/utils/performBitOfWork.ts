@@ -36,6 +36,7 @@ export function updateFunctionComponent(fiber: Fiber) {
 export function updateHostComponent(fiber: Fiber) {
   // specifically for host nodes, they are the only ones that can create DOM
   if (!fiber.dom) fiber.dom = createDom(fiber);
-  const elements = fiber.props?.children ?? [];
+
+  const elements: VNode[] = fiber.props?.children ?? [];
   reconcileChildren(fiber, elements);
 }

@@ -1,4 +1,11 @@
-import { createElement, render, useSideEffect, useState } from './akaza';
+import {
+  createContext,
+  createElement,
+  render,
+  useRef,
+  useSideEffect,
+  useState,
+} from './akaza';
 
 const Akaza = {
   render,
@@ -7,6 +14,7 @@ const Akaza = {
 
 const View = () => {
   const [message, setMessage] = useState('');
+  const inputRef = useRef<HTMLInputElement>();
 
   useSideEffect(() => {
     console.log("My first ever effect, let's hope this works 🤞🏾");
@@ -24,14 +32,35 @@ const View = () => {
     };
   }, [message]);
 
+  const focusInput = (event: Event) => {
+    event.preventDefault();
+
+    inputRef.current?.focus();
+  };
+
   return (
     <div id={'app'}>
       <p>Hello</p>
-      <input type="text" onChange={({ target }) => setMessage(target.value)} />
+      <input
+        type="text"
+        onChange={({ target }) => setMessage(target.value)}
+        ref={inputRef}
+      />
       <span>here's a quick message: {message}</span>
+      <button onClick={focusInput}>focus on input</button>
     </div>
   );
 };
+
+const Theme = createContext<'light' | 'dark'>('light');
+
+function App() {
+  return (
+    <Theme.Provider value={'light'}>
+      <View />
+    </Theme.Provider>
+  );
+}
 
 const root = document.getElementById('root')!;
 

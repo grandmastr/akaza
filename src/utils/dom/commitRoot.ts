@@ -3,6 +3,7 @@ import { Fiber } from '../../types';
 import runSideEffects from '../runSideEffects';
 import { execCleanup } from '../index';
 import { updateDom } from './index';
+import { setRef } from '../../hooks/useRef';
 
 export default function commitRoot() {
   // 1. Process deletions first (so insertions see a clean parent)
@@ -35,13 +36,20 @@ function commitWork(fiber?: Fiber | null) {
   // Effect application
   if (fiber.effectTag === 'PLACEMENT' && fiber.dom) {
     domParent?.appendChild(fiber.dom);
+
+    // set ref on mount
+    setRef(fiber.props?.ref, fiber.dom);
   } else if (fiber.effectTag === 'UPDATE' && fiber.dom) {
     updateDom(
       fiber.dom as HTMLElement,
       fiber.alternate?.props || {},
       fiber.props || {},
     );
+    // update ref in case it changed
+    setRef(fiber.props?.ref, fiber.dom);
   } else if (fiber.effectTag === 'DELETION') {
+    // clear ref on unmount
+    setRef(fiber.alternate?.props?.ref ?? fiber.props?.ref, null);
     commitDeletion(fiber, domParent as Node);
     return;
   }
@@ -67,6 +75,8 @@ function commitDeletion(fiber: Fiber, domParent: Node | null) {
   runCleanups(fiber);
 
   // if the fiber has a DOM node, remove it, else descent until you find nodes
-  if (fiber.dom) domParent?.removeChild(fiber.dom);
-  else commitDeletion(fiber.child!, domParent);
+  if (fiber.dom) {
+    setRef(fiber.props?.ref, null);
+    domParent?.removeChild(fiber.dom);
+  } else commitDeletion(fiber.child!, domParent);
 }
