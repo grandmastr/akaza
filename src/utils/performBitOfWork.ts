@@ -2,6 +2,7 @@ import type { FC, Fiber, Hook, VNode } from '../types.ts';
 import runtime from '../runtime';
 import reconcileChildren from './reconcileChildren';
 import { createDom } from './dom';
+import { forceBoundaryFallback, isBoundaryFiber } from './error-boundary';
 
 export default function performBitOfWork(fiber: Fiber): Fiber | undefined {
   const isFn = typeof fiber.type === 'function';
@@ -23,14 +24,36 @@ export function updateFunctionComponent(fiber: Fiber) {
   runtime.wipFiber = fiber;
   runtime.hookIndex = 0;
   fiber.hooks = [] as Hook[];
+  // check if ancestor is forced
+  const isAncestorForced = (fiber as any)._forcedChildren as
+    | VNode[]
+    | undefined;
+  let result: VNode | VNode[] | null;
 
-  // this calls function components to trigger them
-  const result = (fiber.type as FC)(fiber.props || {});
+  try {
+    // this calls function components to trigger them
+    result = isAncestorForced ?? (fiber.type as FC)(fiber.props || {});
+  } catch (error) {
+    // get the nearest boundary and pop in it's fallback
+    let parent: Fiber | null = fiber.parent ?? null;
+    while (parent && !isBoundaryFiber(parent)) parent = parent.parent ?? null;
+
+    if (!parent) {
+      throw error;
+    }
+
+    forceBoundaryFallback(parent, error);
+
+    return;
+  }
   const children = (Array.isArray(result) ? result : [result]).filter(
     Boolean,
   ) as VNode[];
 
   reconcileChildren(fiber, children);
+
+  // delete forced children
+  (fiber as any)._forcedChildren = undefined;
 }
 
 export function updateHostComponent(fiber: Fiber) {
